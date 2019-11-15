@@ -3,8 +3,8 @@ info:
   title: Storage
   description: This is a API specification for [futuremobile.net](https://futuremobile.net)
   version: 0.0.1
-host: futuremobile.net
-basePath: /storage
+host: storage.futuremobile.net
+basePath: /
 schemes:
   - https
 securityDefinitions: # https://swagger.io/docs/specification/2-0/authentication/
