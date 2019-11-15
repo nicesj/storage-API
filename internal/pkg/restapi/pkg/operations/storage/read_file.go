@@ -11,42 +11,42 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 )
 
-// StorageReadFileHandlerFunc turns a function with the right signature into a storage read file handler
-type StorageReadFileHandlerFunc func(StorageReadFileParams, interface{}) middleware.Responder
+// ReadFileHandlerFunc turns a function with the right signature into a read file handler
+type ReadFileHandlerFunc func(ReadFileParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn StorageReadFileHandlerFunc) Handle(params StorageReadFileParams, principal interface{}) middleware.Responder {
+func (fn ReadFileHandlerFunc) Handle(params ReadFileParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// StorageReadFileHandler interface for that can handle valid storage read file params
-type StorageReadFileHandler interface {
-	Handle(StorageReadFileParams, interface{}) middleware.Responder
+// ReadFileHandler interface for that can handle valid read file params
+type ReadFileHandler interface {
+	Handle(ReadFileParams, interface{}) middleware.Responder
 }
 
-// NewStorageReadFile creates a new http.Handler for the storage read file operation
-func NewStorageReadFile(ctx *middleware.Context, handler StorageReadFileHandler) *StorageReadFile {
-	return &StorageReadFile{Context: ctx, Handler: handler}
+// NewReadFile creates a new http.Handler for the read file operation
+func NewReadFile(ctx *middleware.Context, handler ReadFileHandler) *ReadFile {
+	return &ReadFile{Context: ctx, Handler: handler}
 }
 
-/*StorageReadFile swagger:route GET /readFile Storage storageReadFile
+/*ReadFile swagger:route GET /readFile Storage readFile
 
 Download a file
 
 Streaming a file contents to the client
 
 */
-type StorageReadFile struct {
+type ReadFile struct {
 	Context *middleware.Context
-	Handler StorageReadFileHandler
+	Handler ReadFileHandler
 }
 
-func (o *StorageReadFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *ReadFile) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewStorageReadFileParams()
+	var Params = NewReadFileParams()
 
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {

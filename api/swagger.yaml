@@ -26,7 +26,7 @@ paths:
     post:
       tags:
         - Storage
-      operationId: storageWriteFile
+      operationId: writeFile
       summary: Upload files to the storage
       description: Upload multiple files into the given path (folder)
       security:
@@ -62,7 +62,7 @@ paths:
     get:
       tags:
         - Storage
-      operationId: storageReadFile
+      operationId: readFile
       summary: Download a file
       description: Streaming a file contents to the client
       security:
@@ -88,7 +88,7 @@ paths:
     get:
       tags:
         - Storage
-      operationId: storageReadFolder
+      operationId: readFolder
       summary: Get a list of files and folders
       description: Get a list of files and folders in a given path (folder)
       security:

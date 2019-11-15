@@ -27,8 +27,8 @@ func init() {
     "title": "Storage",
     "version": "0.0.1"
   },
-  "host": "futuremobile.net",
-  "basePath": "/storage",
+  "host": "storage.futuremobile.net",
+  "basePath": "/",
   "paths": {
     "/readFile": {
       "get": {
@@ -49,7 +49,7 @@ func init() {
           "Storage"
         ],
         "summary": "Download a file",
-        "operationId": "storageReadFile",
+        "operationId": "readFile",
         "parameters": [
           {
             "type": "string",
@@ -92,7 +92,7 @@ func init() {
           "Storage"
         ],
         "summary": "Get a list of files and folders",
-        "operationId": "storageReadFolder",
+        "operationId": "readFolder",
         "parameters": [
           {
             "type": "string",
@@ -138,7 +138,7 @@ func init() {
           "Storage"
         ],
         "summary": "Upload files to the storage",
-        "operationId": "storageWriteFile",
+        "operationId": "writeFile",
         "parameters": [
           {
             "type": "string",
@@ -317,8 +317,8 @@ func init() {
     "title": "Storage",
     "version": "0.0.1"
   },
-  "host": "futuremobile.net",
-  "basePath": "/storage",
+  "host": "storage.futuremobile.net",
+  "basePath": "/",
   "paths": {
     "/readFile": {
       "get": {
@@ -339,7 +339,7 @@ func init() {
           "Storage"
         ],
         "summary": "Download a file",
-        "operationId": "storageReadFile",
+        "operationId": "readFile",
         "parameters": [
           {
             "type": "string",
@@ -382,7 +382,7 @@ func init() {
           "Storage"
         ],
         "summary": "Get a list of files and folders",
-        "operationId": "storageReadFolder",
+        "operationId": "readFolder",
         "parameters": [
           {
             "type": "string",
@@ -428,7 +428,7 @@ func init() {
           "Storage"
         ],
         "summary": "Upload files to the storage",
-        "operationId": "storageWriteFile",
+        "operationId": "writeFile",
         "parameters": [
           {
             "type": "string",

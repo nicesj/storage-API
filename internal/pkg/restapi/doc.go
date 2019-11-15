@@ -7,8 +7,8 @@ This is a API specification for [futuremobile.net](https://futuremobile.net)
 
     Schemes:
       https
-    Host: futuremobile.net
-    BasePath: /storage
+    Host: storage.futuremobile.net
+    BasePath: /
     Version: 0.0.1
 
     Consumes:

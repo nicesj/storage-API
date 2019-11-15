@@ -25,7 +25,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	"golang.org/x/net/netutil"
 
-	"futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations"
+	"storage.futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations"
 )
 
 const (

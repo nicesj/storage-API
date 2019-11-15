@@ -17,18 +17,18 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewStorageWriteFileParams creates a new StorageWriteFileParams object
+// NewWriteFileParams creates a new WriteFileParams object
 // no default values defined in spec.
-func NewStorageWriteFileParams() StorageWriteFileParams {
+func NewWriteFileParams() WriteFileParams {
 
-	return StorageWriteFileParams{}
+	return WriteFileParams{}
 }
 
-// StorageWriteFileParams contains all the bound params for the storage write file operation
+// WriteFileParams contains all the bound params for the write file operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters storageWriteFile
-type StorageWriteFileParams struct {
+// swagger:parameters writeFile
+type WriteFileParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -46,8 +46,8 @@ type StorageWriteFileParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewStorageWriteFileParams() beforehand.
-func (o *StorageWriteFileParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewWriteFileParams() beforehand.
+func (o *WriteFileParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -80,7 +80,7 @@ func (o *StorageWriteFileParams) BindRequest(r *http.Request, route *middleware.
 // bindFiles binds and validates array parameter Files from formData.
 //
 // Arrays are parsed according to CollectionFormat: "" (defaults to "csv" when empty).
-func (o *StorageWriteFileParams) bindFiles(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *WriteFileParams) bindFiles(rawData []string, hasKey bool, formats strfmt.Registry) error {
 
 	var qvFiles string
 	if len(rawData) > 0 {
@@ -112,7 +112,7 @@ func (o *StorageWriteFileParams) bindFiles(rawData []string, hasKey bool, format
 }
 
 // bindFolder binds and validates parameter Folder from formData.
-func (o *StorageWriteFileParams) bindFolder(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *WriteFileParams) bindFolder(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

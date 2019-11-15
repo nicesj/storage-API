@@ -11,15 +11,19 @@ import (
 	golangswaggerpaths "path"
 )
 
-// StorageWriteFileURL generates an URL for the storage write file operation
-type StorageWriteFileURL struct {
+// ReadFileURL generates an URL for the read file operation
+type ReadFileURL struct {
+	F *string
+
 	_basePath string
+	// avoid unkeyed usage
+	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *StorageWriteFileURL) WithBasePath(bp string) *StorageWriteFileURL {
+func (o *ReadFileURL) WithBasePath(bp string) *ReadFileURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -27,27 +31,39 @@ func (o *StorageWriteFileURL) WithBasePath(bp string) *StorageWriteFileURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *StorageWriteFileURL) SetBasePath(bp string) {
+func (o *ReadFileURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *StorageWriteFileURL) Build() (*url.URL, error) {
+func (o *ReadFileURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/writeFile"
+	var _path = "/readFile"
 
 	_basePath := o._basePath
 	if _basePath == "" {
-		_basePath = "/storage"
+		_basePath = "/"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
+
+	qs := make(url.Values)
+
+	var fQ string
+	if o.F != nil {
+		fQ = *o.F
+	}
+	if fQ != "" {
+		qs.Set("f", fQ)
+	}
+
+	_result.RawQuery = qs.Encode()
 
 	return &_result, nil
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *StorageWriteFileURL) Must(u *url.URL, err error) *url.URL {
+func (o *ReadFileURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -58,17 +74,17 @@ func (o *StorageWriteFileURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *StorageWriteFileURL) String() string {
+func (o *ReadFileURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *StorageWriteFileURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *ReadFileURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on StorageWriteFileURL")
+		return nil, errors.New("scheme is required for a full url on ReadFileURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on StorageWriteFileURL")
+		return nil, errors.New("host is required for a full url on ReadFileURL")
 	}
 
 	base, err := o.Build()
@@ -82,6 +98,6 @@ func (o *StorageWriteFileURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *StorageWriteFileURL) StringFull(scheme, host string) string {
+func (o *ReadFileURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

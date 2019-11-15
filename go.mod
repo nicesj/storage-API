@@ -1,4 +1,4 @@
-module futuremobile.net/m/v2
+module storage.futuremobile.net/m/v2
 
 go 1.13
 

@@ -15,18 +15,18 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewStorageReadFolderParams creates a new StorageReadFolderParams object
+// NewReadFolderParams creates a new ReadFolderParams object
 // no default values defined in spec.
-func NewStorageReadFolderParams() StorageReadFolderParams {
+func NewReadFolderParams() ReadFolderParams {
 
-	return StorageReadFolderParams{}
+	return ReadFolderParams{}
 }
 
-// StorageReadFolderParams contains all the bound params for the storage read folder operation
+// ReadFolderParams contains all the bound params for the read folder operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters storageReadFolder
-type StorageReadFolderParams struct {
+// swagger:parameters readFolder
+type ReadFolderParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -40,8 +40,8 @@ type StorageReadFolderParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewStorageReadFolderParams() beforehand.
-func (o *StorageReadFolderParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewReadFolderParams() beforehand.
+func (o *ReadFolderParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -60,7 +60,7 @@ func (o *StorageReadFolderParams) BindRequest(r *http.Request, route *middleware
 }
 
 // bindR binds and validates parameter R from query.
-func (o *StorageReadFolderParams) bindR(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *ReadFolderParams) bindR(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

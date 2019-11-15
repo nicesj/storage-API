@@ -11,42 +11,42 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 )
 
-// StorageReadFolderHandlerFunc turns a function with the right signature into a storage read folder handler
-type StorageReadFolderHandlerFunc func(StorageReadFolderParams, interface{}) middleware.Responder
+// ReadFolderHandlerFunc turns a function with the right signature into a read folder handler
+type ReadFolderHandlerFunc func(ReadFolderParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn StorageReadFolderHandlerFunc) Handle(params StorageReadFolderParams, principal interface{}) middleware.Responder {
+func (fn ReadFolderHandlerFunc) Handle(params ReadFolderParams, principal interface{}) middleware.Responder {
 	return fn(params, principal)
 }
 
-// StorageReadFolderHandler interface for that can handle valid storage read folder params
-type StorageReadFolderHandler interface {
-	Handle(StorageReadFolderParams, interface{}) middleware.Responder
+// ReadFolderHandler interface for that can handle valid read folder params
+type ReadFolderHandler interface {
+	Handle(ReadFolderParams, interface{}) middleware.Responder
 }
 
-// NewStorageReadFolder creates a new http.Handler for the storage read folder operation
-func NewStorageReadFolder(ctx *middleware.Context, handler StorageReadFolderHandler) *StorageReadFolder {
-	return &StorageReadFolder{Context: ctx, Handler: handler}
+// NewReadFolder creates a new http.Handler for the read folder operation
+func NewReadFolder(ctx *middleware.Context, handler ReadFolderHandler) *ReadFolder {
+	return &ReadFolder{Context: ctx, Handler: handler}
 }
 
-/*StorageReadFolder swagger:route GET /readFolder Storage storageReadFolder
+/*ReadFolder swagger:route GET /readFolder Storage readFolder
 
 Get a list of files and folders
 
 Get a list of files and folders in a given path (folder)
 
 */
-type StorageReadFolder struct {
+type ReadFolder struct {
 	Context *middleware.Context
-	Handler StorageReadFolderHandler
+	Handler ReadFolderHandler
 }
 
-func (o *StorageReadFolder) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *ReadFolder) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewStorageReadFolderParams()
+	var Params = NewReadFolderParams()
 
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {

@@ -11,8 +11,8 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
 
-	"futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations"
-	"futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations/storage"
+	"storage.futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations"
+	"storage.futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations/storage"
 )
 
 //go:generate swagger generate server --target ../../../internal --name Storage --spec ../../../api/swagger.yaml --api-package pkg/operations --model-package pkg/models --server-package pkg/restapi
@@ -49,19 +49,19 @@ func configureAPI(api *operations.StorageAPI) http.Handler {
 	//
 	// Example:
 	// api.APIAuthorizer = security.Authorized()
-	if api.StorageStorageReadFileHandler == nil {
-		api.StorageStorageReadFileHandler = storage.StorageReadFileHandlerFunc(func(params storage.StorageReadFileParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation storage.StorageReadFile has not yet been implemented")
+	if api.StorageReadFileHandler == nil {
+		api.StorageReadFileHandler = storage.ReadFileHandlerFunc(func(params storage.ReadFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReadFile has not yet been implemented")
 		})
 	}
-	if api.StorageStorageReadFolderHandler == nil {
-		api.StorageStorageReadFolderHandler = storage.StorageReadFolderHandlerFunc(func(params storage.StorageReadFolderParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation storage.StorageReadFolder has not yet been implemented")
+	if api.StorageReadFolderHandler == nil {
+		api.StorageReadFolderHandler = storage.ReadFolderHandlerFunc(func(params storage.ReadFolderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.ReadFolder has not yet been implemented")
 		})
 	}
-	if api.StorageStorageWriteFileHandler == nil {
-		api.StorageStorageWriteFileHandler = storage.StorageWriteFileHandlerFunc(func(params storage.StorageWriteFileParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation storage.StorageWriteFile has not yet been implemented")
+	if api.StorageWriteFileHandler == nil {
+		api.StorageWriteFileHandler = storage.WriteFileHandlerFunc(func(params storage.WriteFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation storage.WriteFile has not yet been implemented")
 		})
 	}
 

@@ -20,7 +20,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations/storage"
+	"storage.futuremobile.net/m/v2/internal/pkg/restapi/pkg/operations/storage"
 )
 
 // NewStorageAPI creates a new Storage instance
@@ -44,14 +44,14 @@ func NewStorageAPI(spec *loads.Document) *StorageAPI {
 			return errors.NotImplemented("applicationOctectStream producer has not yet been implemented")
 		}),
 		TxtProducer: runtime.TextProducer(),
-		StorageStorageReadFileHandler: storage.StorageReadFileHandlerFunc(func(params storage.StorageReadFileParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StorageStorageReadFile has not yet been implemented")
+		StorageReadFileHandler: storage.ReadFileHandlerFunc(func(params storage.ReadFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StorageReadFile has not yet been implemented")
 		}),
-		StorageStorageReadFolderHandler: storage.StorageReadFolderHandlerFunc(func(params storage.StorageReadFolderParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StorageStorageReadFolder has not yet been implemented")
+		StorageReadFolderHandler: storage.ReadFolderHandlerFunc(func(params storage.ReadFolderParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StorageReadFolder has not yet been implemented")
 		}),
-		StorageStorageWriteFileHandler: storage.StorageWriteFileHandlerFunc(func(params storage.StorageWriteFileParams, principal interface{}) middleware.Responder {
-			return middleware.NotImplemented("operation StorageStorageWriteFile has not yet been implemented")
+		StorageWriteFileHandler: storage.WriteFileHandlerFunc(func(params storage.WriteFileParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation StorageWriteFile has not yet been implemented")
 		}),
 
 		OAuth2Auth: func(token string, scopes []string) (interface{}, error) {
@@ -102,12 +102,12 @@ type StorageAPI struct {
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
 
-	// StorageStorageReadFileHandler sets the operation handler for the storage read file operation
-	StorageStorageReadFileHandler storage.StorageReadFileHandler
-	// StorageStorageReadFolderHandler sets the operation handler for the storage read folder operation
-	StorageStorageReadFolderHandler storage.StorageReadFolderHandler
-	// StorageStorageWriteFileHandler sets the operation handler for the storage write file operation
-	StorageStorageWriteFileHandler storage.StorageWriteFileHandler
+	// StorageReadFileHandler sets the operation handler for the read file operation
+	StorageReadFileHandler storage.ReadFileHandler
+	// StorageReadFolderHandler sets the operation handler for the read folder operation
+	StorageReadFolderHandler storage.ReadFolderHandler
+	// StorageWriteFileHandler sets the operation handler for the write file operation
+	StorageWriteFileHandler storage.WriteFileHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -183,16 +183,16 @@ func (o *StorageAPI) Validate() error {
 		unregistered = append(unregistered, "OAuth2Auth")
 	}
 
-	if o.StorageStorageReadFileHandler == nil {
-		unregistered = append(unregistered, "storage.StorageReadFileHandler")
+	if o.StorageReadFileHandler == nil {
+		unregistered = append(unregistered, "storage.ReadFileHandler")
 	}
 
-	if o.StorageStorageReadFolderHandler == nil {
-		unregistered = append(unregistered, "storage.StorageReadFolderHandler")
+	if o.StorageReadFolderHandler == nil {
+		unregistered = append(unregistered, "storage.ReadFolderHandler")
 	}
 
-	if o.StorageStorageWriteFileHandler == nil {
-		unregistered = append(unregistered, "storage.StorageWriteFileHandler")
+	if o.StorageWriteFileHandler == nil {
+		unregistered = append(unregistered, "storage.WriteFileHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -312,17 +312,17 @@ func (o *StorageAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/readFile"] = storage.NewStorageReadFile(o.context, o.StorageStorageReadFileHandler)
+	o.handlers["GET"]["/readFile"] = storage.NewReadFile(o.context, o.StorageReadFileHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/readFolder"] = storage.NewStorageReadFolder(o.context, o.StorageStorageReadFolderHandler)
+	o.handlers["GET"]["/readFolder"] = storage.NewReadFolder(o.context, o.StorageReadFolderHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/writeFile"] = storage.NewStorageWriteFile(o.context, o.StorageStorageWriteFileHandler)
+	o.handlers["POST"]["/writeFile"] = storage.NewWriteFile(o.context, o.StorageWriteFileHandler)
 
 }
 

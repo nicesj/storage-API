@@ -11,8 +11,8 @@ import (
 	golangswaggerpaths "path"
 )
 
-// StorageReadFolderURL generates an URL for the storage read folder operation
-type StorageReadFolderURL struct {
+// ReadFolderURL generates an URL for the read folder operation
+type ReadFolderURL struct {
 	R *string
 
 	_basePath string
@@ -23,7 +23,7 @@ type StorageReadFolderURL struct {
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *StorageReadFolderURL) WithBasePath(bp string) *StorageReadFolderURL {
+func (o *ReadFolderURL) WithBasePath(bp string) *ReadFolderURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -31,19 +31,19 @@ func (o *StorageReadFolderURL) WithBasePath(bp string) *StorageReadFolderURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *StorageReadFolderURL) SetBasePath(bp string) {
+func (o *ReadFolderURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *StorageReadFolderURL) Build() (*url.URL, error) {
+func (o *ReadFolderURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/readFolder"
 
 	_basePath := o._basePath
 	if _basePath == "" {
-		_basePath = "/storage"
+		_basePath = "/"
 	}
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)
 
@@ -63,7 +63,7 @@ func (o *StorageReadFolderURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *StorageReadFolderURL) Must(u *url.URL, err error) *url.URL {
+func (o *ReadFolderURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -74,17 +74,17 @@ func (o *StorageReadFolderURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *StorageReadFolderURL) String() string {
+func (o *ReadFolderURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *StorageReadFolderURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *ReadFolderURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on StorageReadFolderURL")
+		return nil, errors.New("scheme is required for a full url on ReadFolderURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on StorageReadFolderURL")
+		return nil, errors.New("host is required for a full url on ReadFolderURL")
 	}
 
 	base, err := o.Build()
@@ -98,6 +98,6 @@ func (o *StorageReadFolderURL) BuildFull(scheme, host string) (*url.URL, error) 
 }
 
 // StringFull returns the string representation of a complete url
-func (o *StorageReadFolderURL) StringFull(scheme, host string) string {
+func (o *ReadFolderURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }
