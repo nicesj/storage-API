@@ -1,0 +1,8 @@
+HOST=0.0.0.0
+TLS_HOST=0.0.0.0
+DOC_PORT=8283
+TLS_PORT=8282
+TLS_CERTIFICATE=/etc/certificate.pem
+TLS_PRIVATE_KEY=/etc/private.pem
+BASE=internal/pkg
+SPEC_FILE=api/swagger.yaml

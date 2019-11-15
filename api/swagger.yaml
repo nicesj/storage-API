@@ -1,0 +1,193 @@
+swagger: "2.0"
+info:
+  title: OpenAPI (REST)
+  description: This is a API specification for [futuremobile.net](https://futuremobile.net)
+  version: 0.0.1
+host: futuremobile.net
+basePath: /storage
+schemes:
+  - https
+securityDefinitions: # https://swagger.io/docs/specification/2-0/authentication/
+  OAuth2:
+    type: oauth2 # basic, apiKey, oauth2
+    flow: accessCode
+    authorizationUrl: https://futuremobile.net/oauth2/authorize
+    tokenUrl: https://futuremobile.net/oauth2/token
+    scopes:
+      storage.write: Grants write access for the storage
+      storage.read: Grants read access for the storage
+      storage.admin: Grants admin access for the storage
+  APIKeyAuth:
+    type: apiKey
+    in: header
+    name: Authorization
+paths:
+  /writeFile:
+    post:
+      tags:
+        - Storage
+      operationId: storageWriteFile
+      summary: Upload files to the storage
+      description: Upload multiple files into the given path (folder)
+      security:
+       - OAuth2: [storage.write, storage.admin]
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: folder
+          type: string
+          description: A folder (path) to upload files
+        - in: formData # https://swagger.io/docs/specification/2-0/file-upload/
+          name: files
+          type: array
+          items:
+            type: string
+            format: byte   # Should be binary
+      responses:
+        200:
+          description: Status of file uploading
+          schema:
+            $ref: "#/definitions/storageResponse"
+        400:
+          description: Bad Request
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+  # https://github.com/go-swagger/go-swagger/issues/932
+  /readFile:
+    get:
+      tags:
+        - Storage
+      operationId: storageReadFile
+      summary: Download a file
+      description: Streaming a file contents to the client
+      security:
+       - OAuth2: [storage.read, storage.admin]
+      produces:
+        - application/octect-stream
+        - text/plain
+      parameters:
+        - in: query
+          name: f
+          type: string
+          description: A file what would be transferred
+      responses:
+        200:
+          description: download a file
+          schema:
+            type: file
+        400:
+          description: Bad Request
+        403:
+          description: Forbidden
+  /readFolder:
+    get:
+      tags:
+        - Storage
+      operationId: storageReadFolder
+      summary: Get a list of files and folders
+      description: Get a list of files and folders in a given path (folder)
+      security:
+       - OAuth2: [storage.read, storage.admin]
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: r
+          type: string
+          description: A path of target folder
+      responses:
+        200:
+          description: List of files or folders
+          schema:
+            $ref: "#/definitions/getStorageFolderResponse"
+        400:
+          description: Bad Request
+        403:
+          description: Forbidden
+definitions:
+  notFound:
+    type: string
+    example: Not Found
+  internalServerError:
+    type: string
+    example: Internal Server Error
+  forbidden:
+    type: string
+    example: Forbidden
+  badRequest:
+    type: string
+    example: Bad Request
+  created:
+    type: string
+    example: Created
+  conflict:
+    type: string
+    example: Conflict
+  grantType:
+    type: string
+    example: password
+  redirectURL:
+    type: string
+    example: https://helloworld.com/loggedIn
+  getStorageFolderResponse:
+    type: object
+    properties:
+      root:
+        type: string
+        description: root folder
+      files:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              description: file or folder name
+              example: hello.txt
+            type:
+              type: string
+              enum: [d, f, s, e, dl, fl, sl, el]
+              description: |
+                type of an object,
+                * d - folder
+                * f - file
+                * s - special
+                * e - error
+                if the target is a symbolic link, there would be a postfix "l"(L) for each type.
+            size:
+              type: number
+              format: unit64
+              description: filesize in bytes
+            time:
+              type: string
+              format: date-time
+              description: last modified time of the object
+            mime:
+              type: string
+              description: mime type
+  storageResponse:
+    type: array
+    items:
+      type: object
+      required:
+        - status
+      properties:
+        root:
+          type: string
+          example: /image
+          description: A path where the uploaded files are stored
+          x-nullable: true
+        filename:
+          type: string
+          example: myImage.jpg
+          description: Uploaded filename
+          x-nullable: true
+        status:
+          type: number
+          example: 200
+          description: Status of uploading file. [ 200, 400, 403, 500 ]
